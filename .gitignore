@@ -1,0 +1,11 @@
+node_modules/
+.env
+config.json
+output/
+db/sessions/
+*.log
+.vscode/
+.DS_Store
+Thumbs.db
+*.tmp
+temp/

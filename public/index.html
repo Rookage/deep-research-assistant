@@ -1,0 +1,84 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Deep Research Assistant</title>
+  <link rel="stylesheet" href="css/style.css?v=2">
+</head>
+<body>
+  <div class="app">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <h1 class="logo">DRA</h1>
+        <span class="logo-sub">Deep Research</span>
+      </div>
+      <button class="btn-new-session" id="newSessionBtn">+ 新研究</button>
+      <nav class="session-list" id="sessionList">
+        <div class="session-list-empty">暂无历史记录</div>
+      </nav>
+      <div class="sidebar-footer">
+        <span class="version">v0.4.0</span>
+      </div>
+    </aside>
+
+    <!-- Main -->
+    <main class="main" id="main">
+      <!-- Empty state -->
+      <div class="empty-state" id="emptyState">
+        <div class="empty-icon">🔍</div>
+        <h2>AI 深度研究助手</h2>
+        <p>输入一个你想深入研究的问题，我会通过多轮对话帮你澄清需求，然后搜索、验证、生成专业报告。</p>
+        <div class="quick-input" id="quickInput">
+          <textarea
+            id="topicInput"
+            placeholder="例如：中国新能源汽车出口欧洲的市场前景如何？"
+            rows="2"
+          ></textarea>
+          <button class="btn-primary" id="startBtn">开始研究</button>
+        </div>
+      </div>
+
+      <!-- Active session -->
+      <div class="session hidden" id="activeSession">
+        <div class="session-header">
+          <h2 id="sessionTitle">Untitled</h2>
+          <div class="stage-indicator" id="stageIndicator">
+            <span class="stage-dot active"></span> 需求澄清
+            <span class="stage-sep">→</span>
+            <span class="stage-dot"></span> 研究
+            <span class="stage-sep">→</span>
+            <span class="stage-dot"></span> 验证
+            <span class="stage-sep">→</span>
+            <span class="stage-dot"></span> 生成
+          </div>
+        </div>
+
+        <!-- Conversation area -->
+        <div class="conversation" id="conversation"></div>
+
+        <!-- Input area -->
+        <div class="input-area" id="inputArea">
+          <textarea
+            id="messageInput"
+            placeholder="输入你的回答..."
+            rows="1"
+          ></textarea>
+          <button class="btn-primary" id="sendBtn">发送</button>
+        </div>
+
+        <!-- Action bar (stage transitions) -->
+        <div class="action-bar hidden" id="actionBar">
+          <button class="btn-primary" id="proceedBtn">确认并继续 →</button>
+          <button class="btn-secondary" id="reviseBtn">修改纲要</button>
+          <button class="btn-ghost" id="cancelBtn">取消</button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="js/main.js?v=5"></script>
+</body>
+</html>
