@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Deep Research Assistant</title>
+  <style>
+    :root {
+      --bg: #f8fafc; --surface: #ffffff; --border: #e2e8f0;
+      --text: #1e293b; --text2: #64748b; --primary: #2563eb; --accent: #059669;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+    .hero { background: linear-gradient(135deg, #1e293b 0%, #334155 100%); color: #fff; padding: 80px 32px; text-align: center; }
+    .hero h1 { font-size: 48px; font-weight: 800; margin-bottom: 16px; letter-spacing: -1px; }
+    .hero p { font-size: 20px; color: #94a3b8; max-width: 640px; margin: 0 auto 32px; }
+    .hero .badges { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+    .hero .badge { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); padding: 6px 16px; border-radius: 20px; font-size: 14px; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 64px 32px; }
+    .pipeline { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    @media (max-width: 768px) { .pipeline { grid-template-columns: repeat(2, 1fr); } }
+    .stage { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; text-align: center; }
+    .stage .num { width: 40px; height: 40px; background: var(--primary); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; font-weight: 700; font-size: 18px; }
+    .stage h3 { font-size: 16px; margin-bottom: 8px; }
+    .stage p { font-size: 13px; color: var(--text2); }
+    .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 48px; }
+    @media (max-width: 768px) { .features { grid-template-columns: 1fr; } }
+    .feature { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; }
+    .feature h3 { font-size: 15px; margin-bottom: 8px; }
+    .feature p { font-size: 13px; color: var(--text2); }
+    .cta { text-align: center; padding: 64px 32px; }
+    .btn { display: inline-block; background: var(--primary); color: #fff; padding: 14px 32px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 16px; transition: background 0.2s; }
+    .btn:hover { background: #1d4ed8; }
+    .btn2 { background: var(--surface); color: var(--text); border: 2px solid var(--border); margin-left: 12px; }
+    .btn2:hover { background: var(--bg); }
+    footer { text-align: center; padding: 32px; color: var(--text2); font-size: 13px; border-top: 1px solid var(--border); }
+  </style>
+</head>
+<body>
+
+<section class="hero">
+  <h1>AI Deep Research Assistant</h1>
+  <p>输入模糊需求，获得专业研究报告。<br>四阶段 AI 流水线，自动搜索、验证、生成。</p>
+  <div class="badges">
+    <span class="badge">DeepSeek AI</span>
+    <span class="badge">Typst PDF</span>
+    <span class="badge">DOCX / PPTX</span>
+    <span class="badge">事实核查</span>
+    <span class="badge">多源搜索</span>
+  </div>
+</section>
+
+<div class="container">
+  <h2 style="text-align:center;margin-bottom:40px;">四阶段研究流水线</h2>
+  <div class="pipeline">
+    <div class="stage">
+      <div class="num">1</div>
+      <h3>需求访谈</h3>
+      <p>4 维度追问：目的/受众/边界/形式<br>AI 自动生成研究纲要</p>
+    </div>
+    <div class="stage">
+      <div class="num">2</div>
+      <h3>多源搜索</h3>
+      <p>百度 + Bing 并行搜索<br>时效性 + 信源等级标注</p>
+    </div>
+    <div class="stage">
+      <div class="num">3</div>
+      <h3>事实核查</h3>
+      <p>关键主张交叉验证<br>已验证/单一来源/争议</p>
+    </div>
+    <div class="stage">
+      <div class="num">4</div>
+      <h3>报告生成</h3>
+      <p>精美 PDF / DOCX / PPTX<br>封面+目录+引用+页码</p>
+    </div>
+  </div>
+
+  <div class="features">
+    <div class="feature">
+      <h3>AI 驱动</h3>
+      <p>DeepSeek 大模型全程驱动访谈、搜索策略生成、事实提取和报告撰写。</p>
+    </div>
+    <div class="feature">
+      <h3>用户闸门</h3>
+      <p>每个阶段结束需用户确认，避免方向错误浪费成本。成本可预期。</p>
+    </div>
+    <div class="feature">
+      <h3>信源透明</h3>
+      <p>A/B/C 三级信源标注 + 时效标记 + 引用超链接，每句话可溯源。</p>
+    </div>
+    <div class="feature">
+      <h3>精美排版</h3>
+      <p>Typst 引擎生成专业级 PDF，自动封面、目录、页码、参考文献。</p>
+    </div>
+    <div class="feature">
+      <h3>多格式输出</h3>
+      <p>PDF / DOCX / PPTX 三选一，满足不同场景需求。</p>
+    </div>
+    <div class="feature">
+      <h3>会话管理</h3>
+      <p>研究历史持久化存储，支持恢复、列表、删除，随时继续之前的研究。</p>
+    </div>
+  </div>
+</div>
+
+<div class="cta">
+  <a href="https://github.com/t122743663-crypto/deep-research-assistant" class="btn">GitHub 仓库</a>
+  <a href="https://github.com/t122743663-crypto/deep-research-assistant#快速开始" class="btn btn2">快速开始 →</a>
+</div>
+
+<footer>
+  Built with DeepSeek AI · Typst · Node.js · Python<br>
+  MIT License · <a href="https://github.com/t122743663-crypto">t122743663-crypto</a>
+</footer>
+
+</body>
+</html>
