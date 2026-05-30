@@ -37,7 +37,7 @@
 
 ```bash
 # 克隆仓库
-git clone https://github.com/t122743663-crypto/deep-research-assistant.git
+git clone https://github.com/Rookage/deep-research-assistant.git
 cd deep-research-assistant
 
 # 安装 Node.js 依赖
@@ -181,5 +181,5 @@ MIT License — 详见 [LICENSE](LICENSE) 文件。
 ---
 
 <p align="center">
-  <sub>Built with ❤️ by <a href="https://github.com/t122743663-crypto">t122743663-crypto</a></sub>
+  <sub>Built with ❤️ by <a href="https://github.com/Rookage">Rookage</a></sub>
 </p>
