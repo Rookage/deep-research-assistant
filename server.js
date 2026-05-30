@@ -474,6 +474,87 @@ app.post('/api/report/generate', async (req, res, next) => {
   }
 });
 
+// Stage 5: Supplement — add content from shared links & regenerate
+app.post('/api/supplement', async (req, res, next) => {
+  const { sessionId, urls } = req.body;
+  const session = sessionId ? sessions.get(sessionId) : null;
+
+  if (!session) {
+    return res.status(404).json({ success: false, error: { message: '会话不存在或已过期' } });
+  }
+
+  if (!urls || urls.length === 0) {
+    return res.status(400).json({ success: false, error: { message: '请提供至少一个链接' } });
+  }
+
+  // SSE stream for progress
+  res.writeHead(200, {
+    'Content-Type': 'text/event-stream',
+    'Cache-Control': 'no-cache',
+    'Connection': 'keep-alive',
+  });
+  const send = (event, data) => { res.write(`event: ${event}\ndata: ${JSON.stringify(data)}\n\n`); };
+
+  try {
+    const { spawn } = require('child_process');
+    const scrapedContents = [];
+
+    for (let i = 0; i < urls.length; i++) {
+      const url = urls[i];
+      send('progress', { phase: 'fetch', message: `抓取链接 (${i + 1}/${urls.length}): ${url.slice(0, 60)}...` });
+
+      // Use Scrapling fetch script
+      const script = path.join(__dirname, 'python', 'scrapling_fetch.py');
+      const result = await new Promise((resolve) => {
+        const proc = spawn('python', [script, url], {
+          stdio: ['pipe', 'pipe', 'pipe'],
+          timeout: 30000,
+          env: { ...process.env, PYTHONIOENCODING: 'utf-8', PYTHONUTF8: '1' },
+        });
+        let stdout = '';
+        proc.stdout.on('data', d => stdout += d.toString());
+        proc.on('close', () => {
+          try { resolve(JSON.parse(stdout)); } catch { resolve(null); }
+        });
+        proc.on('error', () => resolve(null));
+      });
+
+      if (result && result.text) {
+        scrapedContents.push({
+          url,
+          title: result.title || url,
+          text: result.text.slice(0, 4000),
+          domain: result.domain || '',
+        });
+      }
+      // Delay between fetches
+      await new Promise(r => setTimeout(r, 500));
+    }
+
+    send('progress', { phase: 'integrate', message: `已抓取 ${scrapedContents.length} 个来源，正在整合...` });
+
+    // Store supplement data in session
+    if (!session.supplements) session.supplements = [];
+    session.supplements.push({
+      timestamp: new Date().toISOString(),
+      urls,
+      contents: scrapedContents,
+    });
+    sessionStore.save(session);
+
+    send('complete', {
+      success: true,
+      fetched: scrapedContents.length,
+      contents: scrapedContents,
+      totalSupplements: session.supplements.length,
+    });
+  } catch (err) {
+    send('error', { message: err.message || '补充资料抓取失败' });
+  } finally {
+    res.end();
+  }
+});
+
 // Error handler
 app.use((err, req, res, next) => {
   console.error('[Error]', err.message);
