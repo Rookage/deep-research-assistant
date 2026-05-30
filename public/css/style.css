@@ -302,6 +302,107 @@ body {
   color: var(--text-secondary);
 }
 
+/* ============ Interview Progress ============ */
+
+.interview-progress {
+  margin-top: 12px;
+  padding: 10px 14px;
+  background: var(--warning-light);
+  border: 1px solid #fde68a;
+  border-radius: var(--radius);
+}
+
+.progress-notice {
+  font-size: 13px;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.progress-icon { font-size: 16px; }
+
+.progress-bar-track {
+  height: 6px;
+  background: #e5e7eb;
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 4px;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #f59e0b, #fbbf24);
+  border-radius: 3px;
+  transition: width 0.4s ease;
+  width: 8%;
+}
+
+.progress-label {
+  font-size: 11px;
+  color: var(--text-muted);
+  text-align: right;
+}
+
+/* ============ Clarify Banner ============ */
+
+.clarify-banner {
+  display: flex;
+  gap: 12px;
+  padding: 14px 18px;
+  background: var(--primary-light);
+  border-bottom: 1px solid #bfdbfe;
+  align-items: flex-start;
+}
+
+.clarify-banner-icon {
+  font-size: 20px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.clarify-banner-text {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+.clarify-banner-tip {
+  display: block;
+  margin-top: 4px;
+  font-size: 12px;
+  color: var(--primary);
+  font-weight: 500;
+}
+
+/* ============ Empty State Notice ============ */
+
+.empty-notice {
+  background: var(--warning-light);
+  border: 1px solid #fde68a;
+  border-radius: var(--radius);
+  padding: 14px 20px;
+  margin-bottom: 24px;
+  text-align: left;
+  max-width: 560px;
+}
+
+.empty-notice-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #92400e;
+  margin-bottom: 6px;
+}
+
+.empty-notice-text {
+  font-size: 13px;
+  color: #78716c;
+  line-height: 1.6;
+}
+
+/* ============ Stage Indicator ============ */
+
 .stage-dot {
   width: 10px;
   height: 10px;

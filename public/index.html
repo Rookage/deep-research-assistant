@@ -31,6 +31,12 @@
         <div class="empty-icon">🔍</div>
         <h2>AI 深度研究助手</h2>
         <p>输入一个你想深入研究的问题，我会通过多轮对话帮你澄清需求，然后搜索、验证、生成专业报告。</p>
+        <div class="empty-notice">
+          <div class="empty-notice-title">⏱️ 预计采访 10~15 轮</div>
+          <div class="empty-notice-text">
+            你说得越模糊，我问得越细。这不是闲聊 —— 每一轮都在帮你把模糊的想法变成可执行的研究计划。跳过这个步骤，报告只会"看起来漂亮"但内容不精准。
+          </div>
+        </div>
         <div class="quick-input" id="quickInput">
           <textarea
             id="topicInput"
@@ -45,6 +51,17 @@
       <div class="session hidden" id="activeSession">
         <div class="session-header">
           <h2 id="sessionTitle">Untitled</h2>
+          <!-- Interview progress -->
+          <div class="interview-progress hidden" id="interviewProgress">
+            <div class="progress-notice">
+              <span class="progress-icon">🎯</span>
+              <span>深度访谈中 — 预计 <strong>10~15</strong> 轮对话，帮助厘清模糊需求</span>
+            </div>
+            <div class="progress-bar-track">
+              <div class="progress-bar-fill" id="progressBarFill"></div>
+            </div>
+            <div class="progress-label" id="progressLabel">第 1 轮</div>
+          </div>
           <div class="stage-indicator" id="stageIndicator">
             <span class="stage-dot active"></span> 需求澄清
             <span class="stage-sep">→</span>
@@ -53,6 +70,16 @@
             <span class="stage-dot"></span> 验证
             <span class="stage-sep">→</span>
             <span class="stage-dot"></span> 生成
+          </div>
+        </div>
+
+        <!-- Clarify stage notice -->
+        <div class="clarify-banner hidden" id="clarifyBanner">
+          <div class="clarify-banner-icon">💡</div>
+          <div class="clarify-banner-text">
+            <strong>模糊输入 → 精确报告</strong><br>
+            您的需求越模糊，AI 需要问的越细。这 10~15 轮对话是为了避免"看起来很漂亮、但内容不精确"的报告。
+            <span class="clarify-banner-tip">请耐心回答，越具体越好。</span>
           </div>
         </div>
 

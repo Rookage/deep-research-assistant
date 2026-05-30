@@ -201,6 +201,37 @@
       if (i === idx) dot.classList.add('active');
       else if (i < idx) dot.classList.add('done');
     });
+
+    // Show/hide interview progress and clarify banner
+    var progressEl = document.getElementById('interviewProgress');
+    var bannerEl = document.getElementById('clarifyBanner');
+    if (stage === 'clarify') {
+      if (progressEl) show(progressEl);
+      if (bannerEl) show(bannerEl);
+    } else {
+      if (progressEl) hide(progressEl);
+      if (bannerEl) hide(bannerEl);
+    }
+  }
+
+  function updateInterviewProgress(roundCount) {
+    var progressEl = document.getElementById('interviewProgress');
+    var barFill = document.getElementById('progressBarFill');
+    var label = document.getElementById('progressLabel');
+    if (!progressEl || !barFill || !label) return;
+
+    show(progressEl);
+
+    // 15 rounds max for progress bar, round 15 = 100%
+    var maxRounds = 15;
+    var pct = Math.min((roundCount / maxRounds) * 100, 100);
+    barFill.style.width = pct + '%';
+
+    if (roundCount < maxRounds) {
+      label.textContent = '第 ' + roundCount + ' 轮 · 预计还需 ' + (maxRounds - roundCount) + ' 轮';
+    } else {
+      label.textContent = '第 ' + roundCount + ' 轮 · 接近完成';
+    }
   }
 
   function setInputEnabled(enabled) {
@@ -368,6 +399,7 @@
       currentSessionId = data.sessionId;
       console.log('[DRA] Session created:', currentSessionId);
       addMessage('assistant', data.content);
+      updateInterviewProgress(1);
 
       if (data.type === 'brief') {
         currentBrief = data.brief;
@@ -406,6 +438,18 @@
       var data = await respondToInterview(currentSessionId, msg);
       console.log('[DRA] Response type:', data.type);
       addMessage('assistant', data.content);
+
+      // Calculate round count: (history messages) / 2
+      // 1 initial topic + N responses = total user messages
+      var roundEstimate = 0;
+      try {
+        var sessRes = await fetch('/api/session/' + currentSessionId);
+        var sessData = await sessRes.json();
+        if (sessData.success) {
+          roundEstimate = Math.ceil((sessData.session.history || []).filter(function(h) { return h.role === 'user'; }).length);
+        }
+      } catch(e) {}
+      if (roundEstimate > 0) updateInterviewProgress(roundEstimate);
 
       if (data.type === 'brief') {
         currentBrief = data.brief;
