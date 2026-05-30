@@ -8,6 +8,7 @@ const researcher = require('./services/researcher');
 const factChecker = require('./services/factChecker');
 const reportWriter = require('./services/reportWriter');
 const sessionStore = require('./services/sessionStore');
+const perspectiveEngine = require('./services/perspectiveEngine');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -213,6 +214,38 @@ app.get('/api/session/:id', (req, res) => {
       createdAt: session.createdAt,
     },
   });
+});
+
+// Stage 1.5: Discover perspectives (STORM-inspired)
+app.post('/api/perspectives', async (req, res, next) => {
+  try {
+    const { sessionId } = req.body;
+    const session = sessionId ? sessions.get(sessionId) : null;
+
+    if (!session || !session.brief) {
+      return res.status(400).json({ success: false, error: { message: '请先完成需求访谈，生成研究纲要' } });
+    }
+
+    if (!DEEPSEEK_API_KEY) {
+      return res.status(500).json({ success: false, error: { message: 'DeepSeek API Key 未配置' } });
+    }
+
+    console.log(`[Perspectives] Session ${sessionId}: discovering perspectives...`);
+    const result = await perspectiveEngine.discoverPerspectives(session.brief, DEEPSEEK_API_KEY);
+
+    // Update session
+    session.perspectives = result.perspectives || [];
+    session.crossCuttingThemes = result.crossCuttingThemes || [];
+    sessionStore.save(session);
+
+    res.json({
+      success: true,
+      perspectives: session.perspectives,
+      crossCuttingThemes: session.crossCuttingThemes,
+    });
+  } catch (err) {
+    next(err);
+  }
 });
 
 // Stage 2: Execute research with SSE progress

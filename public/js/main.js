@@ -22,6 +22,7 @@
   let currentBrief = null;
   let currentStage = 'clarify';
   let currentStats = null;
+  let currentPerspectives = null;
 
   // ============ UI Helpers ============
   function show(el) { el.classList.remove('hidden'); }
@@ -238,10 +239,19 @@
     cancelBtn.classList.remove('hidden');
 
     if (mode === 'brief') {
-      proceedBtn.textContent = '确认纲要，开始搜索 →';
-      reviseBtn.textContent = '修改纲要';
-      proceedBtn.onclick = handleStartResearch;
-      reviseBtn.onclick = handleReviseBrief;
+      proceedBtn.textContent = '发现研究视角 🔍';
+      reviseBtn.textContent = '直接搜索';
+      proceedBtn.onclick = handleDiscoverPerspectives;
+      reviseBtn.onclick = handleStartResearch;
+      cancelBtn.onclick = handleReviseBrief;
+      cancelBtn.textContent = '修改纲要';
+    } else if (mode === 'perspectives') {
+      proceedBtn.textContent = '确认视角，深度搜索 →';
+      reviseBtn.textContent = '重新发现';
+      proceedBtn.onclick = function() { handleStartResearch(); };
+      reviseBtn.onclick = handleDiscoverPerspectives;
+      cancelBtn.onclick = handleReviseBrief;
+      cancelBtn.textContent = '修改纲要';
     } else if (mode === 'research') {
       proceedBtn.textContent = '确认素材，开始核查 →';
       reviseBtn.textContent = '补充更多来源';
@@ -420,6 +430,65 @@
     updateStageIndicator('clarify');
     messageInput.placeholder = '请说明需要修改什么...';
     messageInput.focus();
+  }
+
+  // ============ Perspective Discovery (STORM-inspired) ============
+
+  function addPerspectivesCard(perspectives, crossCuttingThemes) {
+    const div = document.createElement('div');
+    div.className = 'message assistant';
+    var perspectivesHtml = (perspectives || []).map(function(p, i) {
+      return '<div class="perspective-item">' +
+        '<div class="perspective-name">' + (i + 1) + '. ' + escHtml(p.name) + '</div>' +
+        '<div class="perspective-rationale">' + escHtml(p.rationale) + '</div>' +
+        '<div class="perspective-questions">' + (p.coreQuestions || []).map(function(q) { return '<span class="question-tag">' + escHtml(q) + '</span>'; }).join('') + '</div>' +
+        '</div>';
+    }).join('');
+
+    var themesHtml = '';
+    if (crossCuttingThemes && crossCuttingThemes.length > 0) {
+      themesHtml = '<div class="cross-cutting-themes"><strong>贯穿主题：</strong>' +
+        crossCuttingThemes.map(function(t) { return '<span class="theme-tag">' + escHtml(t) + '</span>'; }).join(' ') +
+        '</div>';
+    }
+
+    div.innerHTML = `
+      <div class="message-avatar">AI</div>
+      <div class="message-bubble">
+        <div class="research-brief">
+          <h3>🔍 多视角研究框架</h3>
+          <p style="color:#666;font-size:13px;margin-bottom:12px;">AI 自动发现 ${perspectives.length} 个研究视角，帮助深度探索主题</p>
+          ${perspectivesHtml}
+          ${themesHtml}
+        </div>
+      </div>
+    `;
+    conversation.appendChild(div);
+    conversation.scrollTop = conversation.scrollHeight;
+  }
+
+  async function handleDiscoverPerspectives() {
+    if (!currentSessionId) return;
+    hide(actionBar);
+    setInputEnabled(false);
+    addSystemMessage('正在发现多元研究视角...');
+
+    try {
+      var res = await fetch('/api/perspectives', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ sessionId: currentSessionId }),
+      });
+      var data = await res.json();
+      if (!data.success) throw new Error(data.error.message);
+
+      addPerspectivesCard(data.perspectives, data.crossCuttingThemes);
+      currentPerspectives = data.perspectives;
+      setActionBar('perspectives');
+    } catch (err) {
+      showToast(err.message || '视角发现失败', 'error');
+      setActionBar('brief');
+    }
   }
 
   async function handleStartResearch() {

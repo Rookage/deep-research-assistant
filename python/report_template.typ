@@ -38,7 +38,7 @@
     #if "{{CITED}}" != "" [
       引用文献：{{CITED}} 条\
     ]
-    方法论：多源搜索 · 交叉验证 · AI 辅助撰写
+    研究方法：多视角分析 · 模拟专家对话 · 多源交叉验证 · AI 辅助撰写
   ]
 ]
 
@@ -46,8 +46,40 @@
 #outline(title: "目录", depth: 2)
 #pagebreak()
 
+// ---- Research Methodology ----
+#heading(numbering: none)[研究方法]
+#set par(first-line-indent: 2em)
+
+本研究采用 Stanford STORM 方法论框架，结合多视角分析和模拟专家对话技术。研究过程分为四个阶段：
+
++ *需求澄清*：通过结构化访谈，明确研究目的、受众、边界和输出形式。
++ *多视角搜索*：从政策法规、市场竞争、技术发展、社会影响等多个视角，模拟专家对话进行深度搜索。
++ *事实核查*：AI 识别关键事实主张，至少两个独立来源交叉验证。
++ *报告撰写*：基于验证后的素材，逐节生成报告内容，自动引用来源。
+
+#if "{{VERIFIED}}" != "" [
+  #text(size: 10pt, fill: rgb("#555555"))[
+    事实核查统计：{{VERIFIED}} 条已验证主张 | {{SINGLE_SOURCE}} 条单一来源 | {{DISPUTED}} 条存在争议
+  ]
+]
+
+#pagebreak()
+
 // ---- Content Sections ----
 {{SECTIONS}}
+
+// ---- Limitations & Future Outlook ----
+#pagebreak()
+#heading(numbering: none)[局限性声明]
+#set par(first-line-indent: 2em)
+
+本研究基于公开可获取的互联网信息，受限于信息源的时效性和可获取性。部分主张仅来自单一来源，已在文中标注。研究结论不构成专业投资、法律或政策建议。数据截至 {{DATE}}，后续发展可能导致结论变化。
+
+#v(1em)
+#heading(numbering: none)[未来展望]
+#set par(first-line-indent: 2em)
+
+建议持续关注本领域的最新动态，特别是政策法规变化和技术突破。后续研究可以进一步深入以下方向：量化数据分析、专家访谈验证、以及更长期的趋势跟踪。
 
 // ---- References ----
 #pagebreak()

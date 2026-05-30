@@ -138,12 +138,19 @@ def generate(report_json_path, output_path, template_path=None):
     references_typst = build_references(refs)
 
     # Fill template
+    verified = str(meta.get('verifiedClaims', ''))
+    single_source = str(meta.get('singleSourceClaims', ''))
+    disputed = str(meta.get('disputedClaims', ''))
+
     typst_content = template\
         .replace('{{TITLE}}', escape_typst(report.get('title', '研究报告')))\
         .replace('{{TYPE}}', escape_typst(report.get('type', '深度报告')))\
         .replace('{{DATE}}', (meta.get('generatedAt', '') or datetime.now().isoformat())[:10])\
         .replace('{{SOURCES}}', str(meta.get('sourceCount', '')))\
         .replace('{{CITED}}', str(meta.get('citedCount', '')))\
+        .replace('{{VERIFIED}}', verified)\
+        .replace('{{SINGLE_SOURCE}}', single_source)\
+        .replace('{{DISPUTED}}', disputed)\
         .replace('{{SECTIONS}}', sections_typst)\
         .replace('{{REFERENCES}}', references_typst)
 
