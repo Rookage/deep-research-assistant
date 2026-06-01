@@ -1,182 +1,145 @@
 <p align="center">
-  <img src="https://img.shields.io/badge/version-0.4.0-blue" alt="Version">
+  <img src="https://img.shields.io/badge/version-0.5.0-blue" alt="Version">
   <img src="https://img.shields.io/badge/license-MIT-green" alt="License">
-  <img src="https://img.shields.io/badge/platform-Node.js%2016%2B-brightgreen" alt="Node">
+  <img src="https://img.shields.io/badge/Node.js-16%2B-brightgreen" alt="Node">
+  <img src="https://img.shields.io/badge/Python-3.8%2B-blue" alt="Python">
   <img src="https://img.shields.io/badge/AI-DeepSeek-blueviolet" alt="DeepSeek">
-  <img src="https://img.shields.io/badge/PDF-Typst%20%E2%9C%A8-orange" alt="Typst">
+  <img src="https://img.shields.io/badge/PDF-Typst-orange" alt="Typst">
+  <img src="https://img.shields.io/badge/methodology-STORM-red" alt="STORM">
 </p>
 
-<h1 align="center">🔬 AI 深度研究助手</h1>
-<h3 align="center">输入模糊需求 → 输出专业研究报告</h3>
+<h1 align="center">AI Deep Research Assistant</h1>
+<h3 align="center">模糊需求 → 多视角深度研究 → 学术级报告（PDF/DOCX/PPTX）</h3>
 
 <p align="center">
-  <b>四阶段流水线</b>：需求访谈 → 多源搜索 → 事实核查 → PDF/DOCX/PPTX 报告生成
+  <b>不只是搜索，是真正的「研究」</b><br>
+  借鑑 Stanford STORM 论文方法论 · 多视角分析 · 模拟专家对话 · 事实交叉验证
 </p>
 
 ---
 
+## 为什么你需要这个工具？
+
+| 传统做法 | 本工具 |
+|------|------|
+| 手动 Google → 复制粘贴 → 自己写 | AI 自动追问澄清需求 → 多视角深度搜索 → 自动生成 |
+| 只看一个角度的信息 | 🆕 **3-5 个视角**（政策/市场/技术/社会/国际） |
+| 报告只有字，没有图 | 🆕 **ECharts 图表 + Mermaid 流程图** |
+| 生成完就不能改了 | 🆕 **动态补充 Loop**：贴链接 → 整合 → 再生 |
+| Word 排版惨不忍睹 | **Typst 学术级 PDF**：封面+目录+页码+引用 |
+
 ## ✨ 核心特性
 
-- 🎯 **智能需求澄清** — 4 维度结构化访谈（目的/受众/边界/形式），AI 自动追问直到信息充足
-- 🔍 **多源并行搜索** — 自动拆解搜索策略，百度 + Bing 双引擎，时效性 + 信源质量双重标注
-- ✅ **事实交叉验证** — AI 识别关键主张，多源交叉验证，标注"已验证/单一来源/存在争议"
-- 📄 **专业报告生成** — **Typst 精美 PDF**（封面+目录+页码+引用） / DOCX / PPTX 三选一
-- 💾 **会话持久化** — JSON 文件存储，支持恢复、列表、删除
-- 🎨 **专业商务风 UI** — 原生 HTML/CSS/JS，零框架依赖
+- 🎯 **智能需求澄清** — 4 维度结构化访谈（目的/受众/边界/形式），AI 追问至信息充足。**预计 10~15 轮，前端有进度条提示**
+- 🔍 **STORM 多视角搜索** — 借鑑 Stanford 论文，自动发现 3-5 个研究视角，每个视角深度挖掘
+- 💬 **模拟专家对话** — 3 轮追问：初始搜索 → 追問 → 深入追問，不断挖掘
+- ✅ **事实交叉验证** — AI 识别关键主张，至少 2 个独立来源确认，标注"已验证/单一来源/存在争议"
+- 📊 **图表自动生成** — ECharts 数据图表 + Mermaid 流程图/时间线，让报告图文并茂
+- 📄 **学术级 PDF** — Typst 引擎，封面+目录+页码+引用+方法论+局限性声明
+- 🔄 **动态补充 Loop** — 报告生成后贴入链接 → 自动抓取 → 整合进报告 → 重新生成
+- 💾 **会话持久化** — 支持恢复、列表、删除，随时继续之前的研究
 
 ## 🚀 快速开始
 
 ### 前置要求
 
 - **Node.js** v16+
-- **Python** 3.8+（用于内容抓取和文档生成）
-- **Typst** v0.14+（用于 PDF 报告）
-- **DeepSeek API Key**
+- **Python** 3.8+
+- **Typst** v0.14+（PDF 报告）
+- **DeepSeek API Key**（[免费注册](https://platform.deepseek.com)）
 
 ### 安装
 
 ```bash
-# 克隆仓库
 git clone https://github.com/Rookage/deep-research-assistant.git
 cd deep-research-assistant
-
-# 安装 Node.js 依赖
 npm install
-
-# 安装 Python 依赖
 pip install httpx lxml python-docx python-pptx
 
-# 安装 Typst（Windows）
-choco install typst
-# 或 macOS: brew install typst
-# 或 Linux: snap install typst
+# 安装 Typst
+choco install typst        # Windows
+brew install typst          # macOS
+snap install typst          # Linux
 ```
 
 ### 配置
 
 ```bash
-# 复制配置文件
 cp .env.example .env
-```
-
-编辑 `.env`：
-
-```env
-DEEPSEEK_API_KEY=sk-your-key-here  # 必填
-PORT=3001                            # 可选，默认 3001
-SEARCH_PROVIDER=baidu                # baidu（免费）或 bing（需 API Key）
-BING_API_KEY=                        # 仅 bing 模式需要
+# 编辑 .env，填入 DEEPSEEK_API_KEY
 ```
 
 ### 启动
 
 ```bash
-npm start
+npm start                   # http://localhost:3001
 ```
 
-打开 **http://localhost:3001** 即可使用。
-
-## 🏗️ 架构
+## 🏗️ 四阶段流水线
 
 ```
-用户输入需求
+输入模糊需求
       │
       ▼
-┌─────────────────────────┐
-│ 阶段 1：需求访谈        │  ← DeepSeek AI 对话引擎
-│ 4 维度追问 → 研究纲要    │
-└──────────┬──────────────┘
+┌─────────────────────────────┐
+│ 阶段 1：需求访谈 + 视角发现  │  ← DeepSeek + STORM
+│ 4维度追问 → 纲要 → 3-5视角   │
+└──────────┬──────────────────┘
            │ ✅ 用户确认
            ▼
-┌─────────────────────────┐
-│ 阶段 2：多源搜索        │  ← Baidu + Bing + httpx/lxml
-│ 搜索策略 → 素材采集标注  │
-└──────────┬──────────────┘
+┌─────────────────────────────┐
+│ 阶段 2：多视角深度搜索        │  ← 百度 + Bing + httpx/lxml
+│ 每视角3轮对话 → 去重 → 标注   │
+└──────────┬──────────────────┘
            │ ✅ 用户确认
            ▼
-┌─────────────────────────┐
-│ 阶段 3：事实核查        │  ← AI 关键主张提取 + 交叉验证
-│ 验证/单一来源/争议标注   │
-└──────────┬──────────────┘
+┌─────────────────────────────┐
+│ 阶段 3：事实核查              │
+│ AI提取主张 → 交叉验证 → 标注  │
+└──────────┬──────────────────┘
            │ ✅ 用户确认
            ▼
-┌─────────────────────────┐
-│ 阶段 4：报告生成        │  ← Typst PDF / DOCX / PPTX
-│ 大纲 → 逐节撰写 → 导出   │
-└─────────────────────────┘
+┌─────────────────────────────┐
+│ 阶段 4：学术级报告生成        │  ← Typst PDF / DOCX / PPTX
+│ 大纲→逐节+图表→打磨→下载      │
+│ 🔄 可继续补充链接，Loop再生    │
+└─────────────────────────────┘
 ```
 
-## 📁 项目结构
+## 📊 报告对比
 
-```
-deep-research-assistant/
-├── server.js                  ← Express 主入口（v0.4.0）
-├── services/
-│   ├── interviewer.js         ← 阶段 1：对话引擎 + 纲要生成
-│   ├── researcher.js          ← 阶段 2：搜索 + 采集 + 标注
-│   ├── factChecker.js         ← 阶段 3：事实提取 + 交叉验证
-│   ├── reportWriter.js        ← 阶段 4：大纲 + 文档生成
-│   └── sessionStore.js        ← 会话持久化
-├── python/
-│   ├── gen_report_typst.py    ← Typst PDF 生成（✨ 推荐）
-│   ├── gen_report_docx.py     ← DOCX 生成
-│   ├── gen_report_pptx.py     ← PPTX 生成
-│   ├── report_template.typ    ← Typst 模板
-│   └── scrapling_fetch.py     ← 网页内容抓取（httpx+lxml）
-├── public/                    ← 前端（原生 HTML/CSS/JS）
-│   ├── index.html
-│   ├── css/style.css
-│   └── js/main.js
-├── db/
-│   └── schema.sql             ← 数据库结构
-└── PLAN.md                    ← 详细架构规划
-```
-
-## 🎨 报告格式对比
-
-| | DOCX | PPTX | PDF（Typst） |
-|---|:--:|:--:|:--:|
-| 排版品质 | 一般 | 尚可 | ✨ **专业精美** |
-| 封面 | 简单 | 有 | ✅ 正式封面 |
-| 目录 | 手动 | ❌ | ✅ 自动生成 |
-| 页码 | ❌ | 手动 | ✅ 自动 |
-| 引用标注 | 有 | 无 | ✅ 附超链接 |
-
-## 📄 示例报告
-
-运行后输入研究主题，按流程操作即可获得专业报告。示例输出：
-
-> **《中国新能源汽车出口欧洲市场前景分析》**
-> 封面 → 目录 → 6 章节 → 15 条参考文献，308KB PDF
-
-## 📊 信源标注体系
-
-| 时效标记 | 含义 | 信源等级 | 含义 |
-|:--:|------|:--:|------|
-| 🟢 | 有效 | A | 政府/官方/学术 |
-| 🟡 | 偏旧 | B | 知名媒体/咨询公司 |
-| 🔴 | 过时 | C | 个人博客/论坛 |
+| | 传统 DOCX | 本工具 PDF（Typst） |
+|------|:--:|:--:|
+| 封面 | ❌ | ✅ 学术级封面 |
+| 目录 | 手动 | ✅ 自动生成 |
+| 页码 | ❌ | ✅ 自动 |
+| 引用标注 | 手动 | ✅ 超链接+编号 |
+| 图表 | ❌ | ✅ ECharts + Mermaid |
+| 方法论章节 | ❌ | ✅ |
+| 局限性声明 | ❌ | ✅ |
+| 多视角分析 | ❌ | ✅ |
 
 ## 🛠️ 技术栈
 
 | 层 | 技术 |
 |----|------|
 | 后端 | Node.js + Express |
-| AI | DeepSeek API（`deepseek-chat`） |
-| 搜索 | Baidu HTML 解析 + Bing API |
+| AI | DeepSeek API |
+| 搜索 | Baidu + Bing |
 | PDF | Typst v0.14.2 |
 | Office | python-docx + python-pptx |
+| 图表 | ECharts + Mermaid |
 | 内容抓取 | httpx + lxml（Python） |
 | 前端 | 原生 HTML/CSS/JS |
-| 存储 | JSON 文件持久化 |
+| 方法论 | Stanford STORM |
 
 ## 🤝 贡献
 
-欢迎提交 Issue 和 Pull Request。
+欢迎 Star ⭐、Issue、PR！
 
 ## 📝 许可证
 
-MIT License — 详见 [LICENSE](LICENSE) 文件。
+MIT License
 
 ---
 
