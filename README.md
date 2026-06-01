@@ -9,16 +9,120 @@
 </p>
 
 <h1 align="center">AI Deep Research Assistant</h1>
-<h3 align="center">模糊需求 → 多视角深度研究 → 学术级报告（PDF/DOCX/PPTX）</h3>
+<h3 align="center">Vague Idea → Multi-Perspective Research → Academic-Grade Report</h3>
 
 <p align="center">
-  <b>不只是搜索，是真正的「研究」</b><br>
-  借鑑 Stanford STORM 论文方法论 · 多视角分析 · 模拟专家对话 · 事实交叉验证
+  <b>Not just search — real research.</b><br>
+  Stanford STORM methodology · Multi-perspective analysis · Simulated expert dialogue · Fact verification
 </p>
 
 ---
 
-## 为什么你需要这个工具？
+<p align="center">
+  <a href="#english">English</a> | <a href="#chinese">中文</a>
+</p>
+
+---
+
+<h2 id="english">🇬🇧 English</h2>
+
+### Why This Exists
+
+| Traditional Workflow | This Tool |
+|------|------|
+| Manual Google → copy/paste → write yourself | AI clarifies your needs → deep multi-perspective search → auto-generation |
+| Single viewpoint | 🆕 **3–5 perspectives** (policy/market/tech/social/international) |
+| Text-only reports, no visuals | 🆕 **ECharts charts + Mermaid diagrams** |
+| One-shot generation, can't update | 🆕 **Dynamic supplement loop**: paste links → integrate → regenerate |
+| Ugly Word formatting | **Typst academic-grade PDF**: cover + TOC + pagination + citations |
+
+### Features
+
+- 🎯 **Smart Requirement Clarification** — 4-dimension structured interview. ~10–15 rounds, with a progress bar so users know what to expect.
+- 🔍 **STORM Multi-Perspective Search** — Inspired by the Stanford paper. Discovers 3–5 viewpoints, each explored in depth.
+- 💬 **Simulated Expert Dialogue** — 3 rounds per perspective: initial search → follow-up → deep dive.
+- ✅ **Fact Verification** — AI extracts key claims, cross-references ≥2 independent sources, labels "verified / single-source / disputed".
+- 📊 **Auto Chart Generation** — ECharts for data + Mermaid for flowcharts/timelines.
+- 📄 **Academic-Grade PDF** — Typst engine: cover, TOC, pagination, citations, methodology section, limitations disclosure.
+- 🔄 **Dynamic Supplement Loop** — After generation, paste new links → auto-fetch → merge → regenerate. Repeat as needed.
+- 💾 **Session Persistence** — Save, list, delete, resume research sessions anytime.
+
+### Quick Start
+
+**Prerequisites:** Node.js 16+, Python 3.8+, Typst v0.14+, DeepSeek API Key
+
+```bash
+git clone https://github.com/Rookage/deep-research-assistant.git
+cd deep-research-assistant
+npm install
+pip install httpx lxml python-docx python-pptx
+
+# Install Typst
+choco install typst        # Windows
+brew install typst          # macOS
+
+cp .env.example .env        # Add your DeepSeek key
+npm start                   # http://localhost:3001
+```
+
+### Architecture
+
+```
+Vague Idea
+    │
+    ▼
+┌──────────────────────────┐
+│ Stage 1: Clarify + Views  │  ← DeepSeek + STORM
+│ Interview → Brief → 3–5   │
+│ research perspectives     │
+└────────┬─────────────────┘
+         │ ✅ User confirms
+         ▼
+┌──────────────────────────┐
+│ Stage 2: Deep Search      │  ← Baidu + Bing + httpx/lxml
+│ Per-perspective 3-round   │
+│ expert dialogue           │
+└────────┬─────────────────┘
+         │ ✅ User confirms
+         ▼
+┌──────────────────────────┐
+│ Stage 3: Fact Check       │
+│ AI extracts claims →      │
+│ cross-verify → label      │
+└────────┬─────────────────┘
+         │ ✅ User confirms
+         ▼
+┌──────────────────────────┐
+│ Stage 4: Report Generation│  ← Typst PDF / DOCX / PPTX
+│ Outline → sections+charts │
+│ → polish → download       │
+│ 🔄 Supplement Loop        │
+└──────────────────────────┘
+```
+
+### Tech Stack
+
+| Layer | Tech |
+|----|------|
+| Backend | Node.js + Express |
+| AI | DeepSeek API |
+| Search | Baidu + Bing |
+| PDF | Typst v0.14.2 |
+| Office | python-docx + python-pptx |
+| Charts | ECharts + Mermaid |
+| Content Fetch | httpx + lxml (Python) |
+| Frontend | Vanilla HTML/CSS/JS |
+| Methodology | Stanford STORM |
+
+### License
+
+MIT
+
+---
+
+<h2 id="chinese">🇨🇳 中文</h2>
+
+### 为什么你需要这个工具？
 
 | 传统做法 | 本工具 |
 |------|------|
@@ -28,27 +132,20 @@
 | 生成完就不能改了 | 🆕 **动态补充 Loop**：贴链接 → 整合 → 再生 |
 | Word 排版惨不忍睹 | **Typst 学术级 PDF**：封面+目录+页码+引用 |
 
-## ✨ 核心特性
+### 核心特性
 
-- 🎯 **智能需求澄清** — 4 维度结构化访谈（目的/受众/边界/形式），AI 追问至信息充足。**预计 10~15 轮，前端有进度条提示**
-- 🔍 **STORM 多视角搜索** — 借鑑 Stanford 论文，自动发现 3-5 个研究视角，每个视角深度挖掘
-- 💬 **模拟专家对话** — 3 轮追问：初始搜索 → 追問 → 深入追問，不断挖掘
-- ✅ **事实交叉验证** — AI 识别关键主张，至少 2 个独立来源确认，标注"已验证/单一来源/存在争议"
-- 📊 **图表自动生成** — ECharts 数据图表 + Mermaid 流程图/时间线，让报告图文并茂
+- 🎯 **智能需求澄清** — 4 维度结构化访谈，预计 10~15 轮，前端有进度条提示
+- 🔍 **STORM 多视角搜索** — 借鑑 Stanford 论文，自动发现 3-5 个研究视角
+- 💬 **模拟专家对话** — 每个视角 3 轮追问：初始搜索 → 追問 → 深入追問
+- ✅ **事实交叉验证** — AI 识别关键主张，至少 2 个独立来源确认
+- 📊 **图表自动生成** — ECharts 数据图表 + Mermaid 流程图/时间线
 - 📄 **学术级 PDF** — Typst 引擎，封面+目录+页码+引用+方法论+局限性声明
 - 🔄 **动态补充 Loop** — 报告生成后贴入链接 → 自动抓取 → 整合进报告 → 重新生成
 - 💾 **会话持久化** — 支持恢复、列表、删除，随时继续之前的研究
 
-## 🚀 快速开始
+### 快速开始
 
-### 前置要求
-
-- **Node.js** v16+
-- **Python** 3.8+
-- **Typst** v0.14+（PDF 报告）
-- **DeepSeek API Key**（[免费注册](https://platform.deepseek.com)）
-
-### 安装
+**前置要求：** Node.js 16+, Python 3.8+, Typst v0.14+, DeepSeek API Key
 
 ```bash
 git clone https://github.com/Rookage/deep-research-assistant.git
@@ -59,87 +156,34 @@ pip install httpx lxml python-docx python-pptx
 # 安装 Typst
 choco install typst        # Windows
 brew install typst          # macOS
-snap install typst          # Linux
-```
 
-### 配置
-
-```bash
-cp .env.example .env
-# 编辑 .env，填入 DEEPSEEK_API_KEY
-```
-
-### 启动
-
-```bash
+cp .env.example .env        # 填入 DeepSeek API Key
 npm start                   # http://localhost:3001
 ```
 
-## 🏗️ 四阶段流水线
+### 四阶段流水线
 
 ```
-输入模糊需求
-      │
-      ▼
-┌─────────────────────────────┐
-│ 阶段 1：需求访谈 + 视角发现  │  ← DeepSeek + STORM
-│ 4维度追问 → 纲要 → 3-5视角   │
-└──────────┬──────────────────┘
-           │ ✅ 用户确认
-           ▼
-┌─────────────────────────────┐
-│ 阶段 2：多视角深度搜索        │  ← 百度 + Bing + httpx/lxml
-│ 每视角3轮对话 → 去重 → 标注   │
-└──────────┬──────────────────┘
-           │ ✅ 用户确认
-           ▼
-┌─────────────────────────────┐
-│ 阶段 3：事实核查              │
-│ AI提取主张 → 交叉验证 → 标注  │
-└──────────┬──────────────────┘
-           │ ✅ 用户确认
-           ▼
-┌─────────────────────────────┐
-│ 阶段 4：学术级报告生成        │  ← Typst PDF / DOCX / PPTX
-│ 大纲→逐节+图表→打磨→下载      │
-│ 🔄 可继续补充链接，Loop再生    │
-└─────────────────────────────┘
+输入模糊需求 → 视角发现 → 多视角深度搜索 → 事实核查 → 学术级报告
+                                                                  ↕
+                                                           🔄 补充链接 Loop
 ```
 
-## 📊 报告对比
-
-| | 传统 DOCX | 本工具 PDF（Typst） |
-|------|:--:|:--:|
-| 封面 | ❌ | ✅ 学术级封面 |
-| 目录 | 手动 | ✅ 自动生成 |
-| 页码 | ❌ | ✅ 自动 |
-| 引用标注 | 手动 | ✅ 超链接+编号 |
-| 图表 | ❌ | ✅ ECharts + Mermaid |
-| 方法论章节 | ❌ | ✅ |
-| 局限性声明 | ❌ | ✅ |
-| 多视角分析 | ❌ | ✅ |
-
-## 🛠️ 技术栈
+### 技术栈
 
 | 层 | 技术 |
 |----|------|
 | 后端 | Node.js + Express |
 | AI | DeepSeek API |
-| 搜索 | Baidu + Bing |
+| 搜索 | 百度 + Bing |
 | PDF | Typst v0.14.2 |
-| Office | python-docx + python-pptx |
 | 图表 | ECharts + Mermaid |
 | 内容抓取 | httpx + lxml（Python） |
-| 前端 | 原生 HTML/CSS/JS |
 | 方法论 | Stanford STORM |
 
-## 🤝 贡献
+### 许可证
 
-欢迎 Star ⭐、Issue、PR！
-
-## 📝 许可证
-
-MIT License
+MIT
 
 ---
 
