@@ -8,6 +8,10 @@
   <img src="https://img.shields.io/badge/methodology-STORM-red" alt="STORM">
 </p>
 
+<p align="center">
+  <img src="demo/dra-demo.gif" alt="Deep Research Demo" width="800">
+</p>
+
 <h1 align="center">AI Deep Research Assistant</h1>
 <h3 align="center">Vague Idea → Multi-Perspective Research → Academic-Grade Report</h3>
 
